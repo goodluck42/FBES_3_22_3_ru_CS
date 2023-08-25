@@ -170,6 +170,7 @@
 ///////////////////////
 
 {
+    "Hello".ToCharArray();
     int[][] jagged = new int[][]
     {
         new int[] { 30, 42, 50 },

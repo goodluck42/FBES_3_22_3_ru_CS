@@ -9,6 +9,8 @@ try
 {
     reader = new StreamReader(@"Semen\test.txt");
     ptr = Marshal.AllocHGlobal(2023); // Выделяем память
+    
+    throw new ArgumentOutOfRangeException("Exception message"); // Бросок исключения
 }
 catch (Exception ex) when(ex is FileNotFoundException or DirectoryNotFoundException)
 {
@@ -77,4 +79,14 @@ finally
  * 7: -2
  * 6: -3
  */
- 
+var person1 = new Person()
+{
+    Age = 19,
+    Name = "Vadik"
+};
+
+class Person
+{
+    public int Age { get; set; }
+    public string? Name { get; set; }
+}

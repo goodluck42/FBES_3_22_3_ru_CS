@@ -1,4 +1,17 @@
-﻿// SOLID
+﻿// Aggreagation vs composition
+
+var itemValidator = new ItemValidator();
+var stock = new Stock(itemValidator); // aggregation
+
+
+
+stock = null;
+
+// stock.GetItems(); // composition
+// stock.GetValidator();
+
+
+// SOLID
 // 
 
 // var itemValidator = new ItemValidator();
@@ -145,6 +158,7 @@ class ItemValidator
         return true;
     }
 }
+
 class Stock
 {
     private const int StockMaxCapacity = 42;
@@ -207,6 +221,8 @@ class Stock
     {
         return _items;
     }
+
+    public ItemValidator Validator => _validator;
 }
 
 static class StockPrinter

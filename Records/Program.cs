@@ -97,3 +97,9 @@ record Laptop(int Id, string? Model, string? Gpu, string? Cpu, int Ram, List<Dis
 //
 //     Console.WriteLine("Hello, World!");
 // }
+
+class Person
+{
+    public string? Name { get; set; }
+    
+}

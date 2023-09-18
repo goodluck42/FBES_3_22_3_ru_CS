@@ -3,7 +3,7 @@
 namespace Generics;
 
 class RepositoryEnumerator<T> : IEnumerator<T>
-    where T : class // constraints
+    where T : class
 {
     private readonly List<T> _items;
     private readonly int _length;

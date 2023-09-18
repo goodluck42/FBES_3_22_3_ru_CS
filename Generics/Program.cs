@@ -1,51 +1,169 @@
 ﻿using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using Generics;
 
-#region PART3
+// ObservableCollection<T>;
+// List<T>;
+// Stack<T>;
+// Queue<T>;
+// HashSet<T>; // hash table
+// Dictionary<Key, Value>;
 
-var linkedList = new LinkedList<int>();
-var node = new LinkedListNode<int>(5);
-var node2 = new LinkedListNode<int>(10);
-var node3 = new LinkedListNode<int>(10);
+var coll = new MyItemCollection<Medkit>();
 
-linkedList.AddLast(node);
-linkedList.AddLast(node2);
-linkedList.AddAfter(node, node3);
+coll.Add(new Medkit());
+coll.Add(new Medkit());
 
-var table = new HashSet<int>();
-var dict = new Dictionary<string, List<string>>
+var all = coll.GetAll();
+
+var enumerator = all.GetEnumerator();
+
+while (enumerator.MoveNext())
 {
-    { "get", new() { "получить", "принести" } },
-    { "set", new() { "установить", "поставить" } }
-};
+    var medkit = enumerator.Current;
 
-Console.WriteLine(dict["get"]);
-
-
-var queue = new Queue<int>();
-var stack = new Stack<int>();
-
-stack.Push(1);
-stack.Push(2);
-stack.Push(3);
-
-foreach (var value in stack)
-{
-    Console.WriteLine(value);
+    medkit.Use();
 }
 
-foreach (var value in stack)
+// foreach (var medkit in all)
+// {
+//     medkit.Use();
+// }
+
+#region PART4
+
+class MyItemCollection<T>
+    where T : ICloneable<T>, new()
+// where T : struct // T is only value type
+// where T : class  // T is only reference type
+// where T : notnull  // T is only reference type
+// where T : new()  // T is must have default constuctor
 {
-    Console.WriteLine(value);
+    private readonly List<T> _values;
+
+    public MyItemCollection()
+    {
+        _values = new();
+    }
+
+    public void Add(T value)
+    {
+        _values.Add(value);
+    }
+
+    public void AddEmpty()
+    {
+        T value = new T();
+
+        _values.Add(value);
+    }
+
+    public IEnumerable<T> GetAll()
+    {
+        return _values;
+    }
 }
 
-stack.ToArray();
+abstract class Item // 24
+{
+    public Guid Id { get; set; }
+    public string Name { get; }
+
+    public int Quantity { get; set; }
+
+    protected Item(string name)
+    {
+        Name = name;
+    }
+
+    public abstract void Use();
+}
+
+sealed class BottleOfWater : Item
+{
+    public BottleOfWater() : base(nameof(BottleOfWater))
+    {
+    }
+
+    public override void Use()
+    {
+        Console.WriteLine($"Using {Name}");
+    }
+}
+
+sealed class Medkit : Item, ICloneable<Medkit>
+{
+    public Medkit() : base(nameof(Medkit))
+    {
+    }
+
+    public override void Use()
+    {
+        Console.WriteLine($"Using {Name}");
+    }
+
+    public Medkit Clone()
+    {
+        return new Medkit();
+    }
+}
+
+interface ICloneable<T>
+{
+    T Clone();
+}
 
 #endregion
 
 
+// #region PART3
+
+// var linkedList = new LinkedList<int>();
+// var node = new LinkedListNode<int>(5);
+// var node2 = new LinkedListNode<int>(10);
+// var node3 = new LinkedListNode<int>(10);
+//
+// linkedList.AddLast(node);
+// linkedList.AddLast(node2);
+// linkedList.AddAfter(node, node3);
+//
+// var table = new HashSet<int>();
+//
+// var dict = new Dictionary<string, List<string>>
+// {
+//     { "get", new() { "получить", "принести" } },
+//     { "set", new() { "установить", "поставить" } }
+// };
+//
+//
+//
+// Console.WriteLine(dict["get"]);
+//
+// var queue = new Queue<int>();
+// var stack = new Stack<int>();
+//
+// stack.Push(1);
+// stack.Push(2);
+// stack.Push(3);
+//
+// foreach (var value in stack)
+// {
+//     Console.WriteLine(value);
+// }
+//
+// foreach (var value in stack)
+// {
+//     Console.WriteLine(value);
+// }
+//
+// stack.ToArray();
+
+// #endregion
+
+
 #region PART2
 
+//
 // using System.Collections;
 // using Generics;
 //
@@ -77,7 +195,6 @@ stack.ToArray();
 //
 // enumerator.Reset();
 // enumerator.Dispose();
-//
 
 #endregion
 

@@ -1,5 +1,4 @@
 ﻿using System.IO;
-using System.Net.Sockets;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Text.Json;
@@ -13,8 +12,7 @@ using System.Text.Json;
     // fileStream.Write(buffer, 0, buffer.Length);
     //
     // fileStream.Close();
-
-
+    
     //// READ
     // string fileName = "data.bin";
     //
@@ -35,7 +33,6 @@ using System.Text.Json;
     //
     // Console.WriteLine(resultString);
 }
-
 
 {
     using var obj = new UnmanagedObject();
@@ -168,8 +165,6 @@ foreach (var file in files)
 {
     Console.WriteLine(file);
 }
-
-
 
 
 class UnmanagedObject : IDisposable
